@@ -1,47 +1,28 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <div id="app" class="container">
+      <h4>{{title}}</h4>
+       <font-awesome-icon icon="fa-solid fa-user-secret" />Add Appointment
+         <font-awesome-icon icon="fa-solid fa-user-secret" />
+        <div v-for="(item, i) in appointments" v-bind:key="i">
+          <h4>{{item.petName}}</h4>
+          <p>{{item.aptNotes}}</p>
+        </div>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<script>
+  import axios from "axios"
+  export default {
+    name: "MainApp",
+    data: function() {
+      return {
+        title: "Appointment List",
+        appointments: []
+      };
+    },
+    mounted () {
+      axios.get(".,public/data/appointments.json")
+      .then(response => (this.appointments = response.data));
+    }
+  };
+</script>
